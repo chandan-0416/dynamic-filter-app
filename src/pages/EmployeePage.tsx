@@ -82,7 +82,7 @@ const EmployeePage = () => {
             gutterBottom
             sx={{ fontWeight: "bold" }}
           >
-            Employee Management Dashboard
+            Dynamic Filter Component System
           </Typography>
 
           <Typography variant="h6">
