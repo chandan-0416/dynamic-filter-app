@@ -1,12 +1,7 @@
+import EmployeePage from "./pages/EmployeePage";
 
 function App() {
-  return (
-    <>
-
-<div> 
-  <h1>I'm working on assessment project</h1>
-</div>
-    </>
-  )
+  return <EmployeePage />;
 }
-export default App
+
+export default App;
