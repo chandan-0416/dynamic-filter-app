@@ -24,7 +24,7 @@ export const employeeFilterConfig: FilterFieldConfig[] = [
 
     options: [
       "Engineering",
-      "HR",
+      "Human Resources",
       "Finance",
       "Marketing",
       "Sales",

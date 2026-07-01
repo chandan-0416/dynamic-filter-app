@@ -4,17 +4,21 @@ import DateInput from "../FilterInputs/DateInput";
 import SelectInput from "../FilterInputs/SelectInput";
 import MultiSelectInput from "../FilterInputs/MultiSelectInput";
 import BooleanInput from "../FilterInputs/BooleanInput";
+import NumberRangeInput from "../FilterInputs/NumberRangeInput";
+import DateRangeInput from "../FilterInputs/DateRangeInput";
 
-import { FieldType, type FilterFieldConfig } from "../../types/filter";
+import { FieldType, type FilterFieldConfig, type FilterOperator } from "../../types/filter";
 
 interface InputRendererProps {
   field?: FilterFieldConfig;
+  operator: FilterOperator;
   value: unknown;
   onChange: (value: unknown) => void;
 }
 
 const InputRenderer = ({
   field,
+  operator,
   value,
   onChange,
 }: InputRendererProps) => {
@@ -29,22 +33,57 @@ const InputRenderer = ({
         />
       );
 
-    case FieldType.NUMBER:
-    
-      return (
-        <NumberInput
-          value={value as number}
-          onChange={onChange}
-        />
-      );
+case FieldType.NUMBER:
 
-    case FieldType.DATE:
-      return (
-        <DateInput
-          value={value as string}
-          onChange={onChange}
-        />
-      );
+  if (operator === "between") {
+    return (
+      <NumberRangeInput
+        value={
+          (value as {
+            min: number | "";
+            max: number | "";
+          }) ?? {
+            min: "",
+            max: "",
+          }
+        }
+        onChange={onChange}
+      />
+    );
+  }
+
+  return (
+    <NumberInput
+      value={(value as number) ?? ""}
+      onChange={onChange}
+    />
+  );
+
+ case FieldType.DATE:
+
+  if (operator === "between") {
+    return (
+      <DateRangeInput
+        value={
+          (value as {
+            from: string;
+            to: string;
+          }) ?? {
+            from: "",
+            to: "",
+          }
+        }
+        onChange={onChange}
+      />
+    );
+  }
+
+  return (
+    <DateInput
+      value={(value as string) ?? ""}
+      onChange={onChange}
+    />
+  );
 
     case FieldType.SELECT:
       return (

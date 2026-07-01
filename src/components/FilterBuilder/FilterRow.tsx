@@ -3,6 +3,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 
 import InputRenderer from "./InputRenderer";
 
+import { FieldType } from "../../types/filter";
 import type {
   FilterCondition,
   FilterFieldConfig,
@@ -44,14 +45,33 @@ const FilterRow = ({
     });
   };
 
-  const handleOperatorChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    onChange({
-      ...condition,
-      operator: event.target.value as FilterOperator,
-    });
-  };
+const handleOperatorChange = (
+  event: React.ChangeEvent<HTMLInputElement>
+) => {
+  const operator = event.target.value as FilterOperator;
+
+  let value: FilterCondition["value"] = "";
+
+  if (
+    selectedField?.type === FieldType.NUMBER &&
+    operator === "between"
+  ) {
+    value = { min: "", max: "" };
+  } else if (
+    selectedField?.type === FieldType.DATE &&
+    operator === "between"
+  ) {
+    value = { from: "", to: "" };
+  } else if (selectedField?.type === FieldType.MULTI_SELECT) {
+    value = [];
+  }
+
+  onChange({
+    ...condition,
+    operator,
+    value,
+  });
+};
 
   const handleValueChange = (value: unknown) => {
     onChange({
@@ -97,11 +117,12 @@ const FilterRow = ({
       </TextField>
 
       {/* Value */}
-      <InputRenderer
-        field={selectedField}
-        value={condition.value}
-        onChange={handleValueChange}
-      />
+<InputRenderer
+  field={selectedField}
+  operator={condition.operator}
+  value={condition.value}
+  onChange={handleValueChange}
+/>
 
       {/* Delete */}
       <IconButton color="error" onClick={onDelete}>

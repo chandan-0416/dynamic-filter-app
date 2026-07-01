@@ -35,9 +35,27 @@ export interface FilterFieldConfig {
   options?: string[];
 }
 
+export interface NumberRangeValue {
+  min: number | "";
+  max: number | "";
+}
+
+export interface DateRangeValue {
+  from: string;
+  to: string;
+}
+
+export type FilterValue =
+  | string
+  | number
+  | boolean
+  | string[]
+  | NumberRangeValue
+  | DateRangeValue;
+
 export interface FilterCondition {
   id: string;
   field: string;
   operator: FilterOperator;
-  value: [];
+  value: FilterValue;
 }

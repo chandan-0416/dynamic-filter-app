@@ -30,7 +30,7 @@ const DynamicFilter = ({
       id: uuid(),
       field: firstField.key,
       operator: firstField.operators[0],
-      value: "",
+      value: [],
     };
 
     onFiltersChange([...filters, newFilter]);

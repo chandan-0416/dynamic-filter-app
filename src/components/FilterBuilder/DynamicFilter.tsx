@@ -1,5 +1,15 @@
-import { Button, Paper, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Chip,
+  Divider,
+  Paper,
+  Stack,
+  Typography,
+} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+import DeleteSweepIcon from "@mui/icons-material/DeleteSweep";
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { v4 as uuid } from "uuid";
 
 import FilterRow from "./FilterRow";
@@ -20,7 +30,17 @@ const DynamicFilter = ({
   filters,
   onFiltersChange,
 }: DynamicFilterProps) => {
-  // Add a new filter
+  const getDefaultValue = (field: FilterFieldConfig) => {
+    switch (field.type) {
+      case "multiSelect":
+        return [];
+      case "boolean":
+        return false;
+      default:
+        return "";
+    }
+  };
+
   const handleAddFilter = () => {
     if (fields.length === 0) return;
 
@@ -30,51 +50,79 @@ const DynamicFilter = ({
       id: uuid(),
       field: firstField.key,
       operator: firstField.operators[0],
-      value: [],
+      value: getDefaultValue(firstField),
     };
 
     onFiltersChange([...filters, newFilter]);
   };
 
-  // Update existing filter
-  const handleUpdateFilter = (updatedFilter: FilterCondition) => {
-    const updatedFilters = filters.map((filter) =>
-      filter.id === updatedFilter.id ? updatedFilter : filter
+  const handleUpdateFilter = (
+    updatedFilter: FilterCondition
+  ) => {
+    onFiltersChange(
+      filters.map((filter) =>
+        filter.id === updatedFilter.id
+          ? updatedFilter
+          : filter
+      )
     );
-
-    onFiltersChange(updatedFilters);
   };
 
-  // Delete filter
   const handleDeleteFilter = (id: string) => {
-    const updatedFilters = filters.filter(
-      (filter) => filter.id !== id
+    onFiltersChange(
+      filters.filter((filter) => filter.id !== id)
     );
-
-    onFiltersChange(updatedFilters);
   };
 
-  // Clear all filters
   const handleClearFilters = () => {
     onFiltersChange([]);
   };
 
   return (
-    <Paper elevation={3} sx={{ p: 3, mb: 3 }}>
+    <Paper
+      elevation={4}
+      sx={{
+        p: 4,
+        borderRadius: 3,
+        backgroundColor: "#fafafa",
+      }}
+    >
+      {/* Header */}
       <Stack
         direction="row"
-        sx={{ justifyContent: "space-between", alignItems: "center", mb: 3 }}
+        sx={{ mb: 3, justifyContent: "space-between", alignItems: "center" }}
       >
-        <Typography variant="h6">
-          Dynamic Filters
-        </Typography>
+        <Box>
+          <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
+            <FilterAltIcon color="primary" />
+
+            <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+              Dynamic Filters
+            </Typography>
+
+            <Chip
+              label={`${filters.length} Active`}
+              color="primary"
+              size="small"
+            />
+          </Stack>
+
+          <Typography variant="body2" sx={{ mt: 1, color: "text.secondary" }}>
+            Build reusable filters to quickly search employees.
+          </Typography>
+        </Box>
 
         <Stack direction="row" spacing={2}>
           <Button
             variant="outlined"
             color="error"
+            startIcon={<DeleteSweepIcon />}
             onClick={handleClearFilters}
             disabled={filters.length === 0}
+            sx={{
+              borderRadius: 2,
+              px: 3,
+            }}
           >
             Clear All
           </Button>
@@ -83,29 +131,73 @@ const DynamicFilter = ({
             variant="contained"
             startIcon={<AddIcon />}
             onClick={handleAddFilter}
+            sx={{
+              borderRadius: 2,
+              px: 3,
+              boxShadow: 3,
+            }}
           >
             Add Filter
           </Button>
         </Stack>
       </Stack>
 
+      <Divider sx={{ mb: 3 }} />
+
       {filters.length === 0 ? (
-        <Typography
-          variant="body2"
-          color="text.secondary"
+        <Paper
+          variant="outlined"
+          sx={{
+            p: 5,
+            borderStyle: "dashed",
+            textAlign: "center",
+            backgroundColor: "#fcfcfc",
+          }}
         >
-          No filters added. Click "Add Filter" to begin.
-        </Typography>
+          <FilterAltIcon
+            color="disabled"
+            sx={{
+              fontSize: 60,
+              mb: 2,
+            }}
+          />
+
+          <Typography
+            variant="h6"
+            gutterBottom
+          >
+            No Filters Added
+          </Typography>
+
+          <Typography sx={{ color: "text.secondary" }}>
+            Click the <strong>Add Filter</strong> button
+            above to start filtering employees.
+          </Typography>
+        </Paper>
       ) : (
         <Stack spacing={2}>
           {filters.map((filter) => (
-            <FilterRow
+            <Paper
               key={filter.id}
-              condition={filter}
-              fields={fields}
-              onChange={handleUpdateFilter}
-              onDelete={() => handleDeleteFilter(filter.id)}
-            />
+              variant="outlined"
+              sx={{
+                p: 2,
+                borderRadius: 2,
+                transition: "0.2s",
+                "&:hover": {
+                  boxShadow: 2,
+                },
+              }}
+            >
+              <FilterRow
+                condition={filter}
+                fields={fields}
+                onChange={handleUpdateFilter}
+                onDelete={() =>
+                  handleDeleteFilter(filter.id)
+                }
+              />
+            </Paper>
           ))}
         </Stack>
       )}
