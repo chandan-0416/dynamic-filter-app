@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useEffect,useState } from "react";
 import {Alert, Box, Card, CardContent, CircularProgress, Container, Grid, Paper, Typography,} from "@mui/material";
 import DynamicFilter from "../components/FilterBuilder/DynamicFilter";
 import EmployeeTable from "../components/Table/EmployeeTable";
@@ -6,16 +6,18 @@ import { useEmployees } from "../hooks/useEmployees";
 import { useFilteredData } from "../hooks/useFilteredData";
 import { employeeFilterConfig } from "../config/employeeFilterConfig";
 import type { FilterCondition } from "../types/filter";
+import {loadFilters, saveFilters,} from "../utils/storage";
 
 const EmployeePage = () => {
   const { employees, loading, error } = useEmployees();
 
-  const [filters, setFilters] = useState<FilterCondition[]>([]);
+//This loads the filters only once when the page starts
+  const [filters, setFilters] = useState<FilterCondition[]>(()=>loadFilters());
+  useEffect(() => {
+saveFilters(filters);
+}, [filters]);
 
-  const filteredEmployees = useFilteredData(
-    employees,
-    filters
-  );
+  const filteredEmployees = useFilteredData(employees,filters);
 
   if (loading) {
     return (
@@ -90,7 +92,7 @@ const EmployeePage = () => {
             }}
             gutterBottom
           >
-            Employee Management Dashboard
+            Dynamic Filter System
           </Typography>
 
           <Typography
@@ -102,8 +104,7 @@ const EmployeePage = () => {
               },
             }}
           >
-            Dynamic, reusable and configuration-driven employee
-            filtering system.
+          reusable, type-safe and configuration-driven dynamic filter system
           </Typography>
         </Paper>
 

@@ -47,8 +47,25 @@ export const employeeFilterConfig: FilterFieldConfig[] = [
       "before",
       "after",
       "on",
+      "between"
     ],
   },
+  {
+    key:"address.city",
+    label:"City",
+    type:FieldType.SELECT,
+    operators:["equals"],
+    options:[
+        "Gorakhpur",
+        "Bengaluru",
+        "Hyderabad",
+        "Pune",
+        "Delhi",
+        "Noida",
+        "Jaipur",
+        "Mumbai"
+    ]
+},
 
   {
     key: "skills",

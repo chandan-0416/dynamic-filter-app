@@ -5,6 +5,8 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { v4 as uuid } from "uuid";
 import FilterRow from "./FilterRow";
 import type {FilterCondition, FilterFieldConfig,} from "../../types/filter";
+import { clearFilters } from "../../utils/storage";
+
 
 interface DynamicFilterProps {
   fields: FilterFieldConfig[];
@@ -62,6 +64,7 @@ const DynamicFilter = ({
   };
 
   const handleClearFilters = () => {
+    clearFilters();
     onFiltersChange([]);
   };
 

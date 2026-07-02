@@ -129,11 +129,7 @@ const EmployeeTable = ({
               </TableCell>
 
               <TableCell sx={{ fontWeight: 700, whiteSpace: "nowrap" }}>
-                Projects
-              </TableCell>
-
-              <TableCell sx={{ fontWeight: 700, whiteSpace: "nowrap" }}>
-                Rating
+                City
               </TableCell>
 
               <TableCell sx={{ fontWeight: 700, whiteSpace: "nowrap" }}>
@@ -194,11 +190,7 @@ const EmployeeTable = ({
                 </TableCell>
 
                 <TableCell sx={{ whiteSpace: "nowrap" }}>
-                  {employee.projects}
-                </TableCell>
-
-                <TableCell sx={{ whiteSpace: "nowrap" }}>
-                  {employee.performanceRating}
+                  {employee.address.city}
                 </TableCell>
 
                 <TableCell>
