@@ -1,8 +1,4 @@
-import type {
-  FilterOperator,
-  NumberRangeValue,
-  DateRangeValue,
-} from "../types/filter";
+import type {FilterOperator,NumberRangeValue,DateRangeValue,} from "../types/filter";
 
 type OperatorFunction = (
   employeeValue: unknown,
@@ -10,10 +6,7 @@ type OperatorFunction = (
 ) => boolean;
 
 export const operators: Record<FilterOperator, OperatorFunction> = {
-  // ==========================
   // TEXT OPERATORS
-  // ==========================
-
   contains: (employeeValue, filterValue) =>
     String(employeeValue)
       .toLowerCase()
@@ -32,10 +25,7 @@ export const operators: Record<FilterOperator, OperatorFunction> = {
       .toLowerCase()
       .endsWith(String(filterValue).toLowerCase()),
 
-  // ==========================
-  // NUMBER OPERATORS
-  // ==========================
-
+    // NUMBER OPERATORS
   greaterThan: (employeeValue, filterValue) =>
     Number(employeeValue) > Number(filterValue),
 
@@ -47,12 +37,9 @@ export const operators: Record<FilterOperator, OperatorFunction> = {
 
   lessThanOrEqual: (employeeValue, filterValue) =>
     Number(employeeValue) <= Number(filterValue),
-
-  // ==========================
+   
   // BETWEEN (Number + Date)
-  // ==========================
-
-  between: (employeeValue, filterValue) => {
+ between: (employeeValue, filterValue) => {
     if (
       typeof filterValue !== "object" ||
       filterValue === null
@@ -89,10 +76,7 @@ export const operators: Record<FilterOperator, OperatorFunction> = {
     return false;
   },
 
-  // ==========================
   // ARRAY OPERATORS
-  // ==========================
-
   in: (employeeValue, filterValue) => {
     if (!Array.isArray(filterValue)) {
       return false;
@@ -121,20 +105,14 @@ export const operators: Record<FilterOperator, OperatorFunction> = {
     return !filterValue.includes(employeeValue);
   },
 
-  // ==========================
   // BOOLEAN
-  // ==========================
-
   is: (employeeValue, filterValue) =>
     employeeValue === filterValue,
 
   isNot: (employeeValue, filterValue) =>
     employeeValue !== filterValue,
 
-  // ==========================
   // DATE OPERATORS
-  // ==========================
-
   before: (employeeValue, filterValue) =>
     new Date(String(employeeValue)).getTime() <
     new Date(String(filterValue)).getTime(),

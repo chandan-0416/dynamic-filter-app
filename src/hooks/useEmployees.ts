@@ -12,7 +12,7 @@ export const useEmployees = () => {
       try {
         const data = await employeeService.getEmployees();
 
-        console.log("Employees:", data);   // ✅ Test here
+        console.log("Employees:", data); 
 
         setEmployees(data);
       } catch {

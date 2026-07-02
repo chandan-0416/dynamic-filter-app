@@ -6,7 +6,6 @@ import MultiSelectInput from "../FilterInputs/MultiSelectInput";
 import BooleanInput from "../FilterInputs/BooleanInput";
 import NumberRangeInput from "../FilterInputs/NumberRangeInput";
 import DateRangeInput from "../FilterInputs/DateRangeInput";
-
 import { FieldType, type FilterFieldConfig, type FilterOperator } from "../../types/filter";
 
 interface InputRendererProps {

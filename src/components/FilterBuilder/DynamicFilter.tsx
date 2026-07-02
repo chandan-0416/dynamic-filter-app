@@ -1,23 +1,10 @@
-import {
-  Box,
-  Button,
-  Chip,
-  Divider,
-  Paper,
-  Stack,
-  Typography,
-} from "@mui/material";
+import {Box, Button, Chip, Divider, Paper, Stack, Typography,} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteSweepIcon from "@mui/icons-material/DeleteSweep";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { v4 as uuid } from "uuid";
-
 import FilterRow from "./FilterRow";
-
-import type {
-  FilterCondition,
-  FilterFieldConfig,
-} from "../../types/filter";
+import type {FilterCondition, FilterFieldConfig,} from "../../types/filter";
 
 interface DynamicFilterProps {
   fields: FilterFieldConfig[];
@@ -82,21 +69,55 @@ const DynamicFilter = ({
     <Paper
       elevation={4}
       sx={{
-        p: 4,
+        p: {
+          xs: 2,
+          sm: 3,
+          md: 4,
+        },
         borderRadius: 3,
         backgroundColor: "#fafafa",
       }}
     >
       {/* Header */}
+
       <Stack
-        direction="row"
-        sx={{ mb: 3, justifyContent: "space-between", alignItems: "center" }}
+        direction={{
+          xs: "column",
+          md: "row",
+        }}
+        spacing={3}
+        sx={{
+          mb: 3,
+          justifyContent: "space-between",
+          alignItems: {
+            xs: "stretch",
+            md: "center",
+          },
+        }}
       >
+        {/* Left */}
+
         <Box>
-          <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
+          <Stack
+            direction="row"
+            spacing={1}
+            sx={{
+              flexWrap: "wrap",
+              alignItems: "center",
+            }}
+          >
             <FilterAltIcon color="primary" />
 
-            <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+            <Typography
+              sx={{
+                fontWeight: "bold",
+                fontSize: {
+                  xs: "1.4rem",
+                  sm: "1.6rem",
+                  md: "1.8rem",
+                },
+              }}
+            >
               Dynamic Filters
             </Typography>
 
@@ -107,13 +128,37 @@ const DynamicFilter = ({
             />
           </Stack>
 
-          <Typography variant="body2" sx={{ mt: 1, color: "text.secondary" }}>
+          <Typography
+            sx={{
+              mt: 1,
+              color: "text.secondary",
+              fontSize: {
+                xs: "0.9rem",
+                sm: "1rem",
+              },
+            }}
+          >
             Build reusable filters to quickly search employees.
           </Typography>
         </Box>
 
-        <Stack direction="row" spacing={2}>
+        {/* Right */}
+
+        <Stack
+          direction={{
+            xs: "column",
+            sm: "row",
+          }}
+          spacing={2}
+          sx={{
+            width: {
+              xs: "100%",
+              md: "auto",
+            },
+          }}
+        >
           <Button
+            fullWidth
             variant="outlined"
             color="error"
             startIcon={<DeleteSweepIcon />}
@@ -128,6 +173,7 @@ const DynamicFilter = ({
           </Button>
 
           <Button
+            fullWidth
             variant="contained"
             startIcon={<AddIcon />}
             onClick={handleAddFilter}
@@ -148,7 +194,10 @@ const DynamicFilter = ({
         <Paper
           variant="outlined"
           sx={{
-            p: 5,
+            p: {
+              xs: 3,
+              sm: 5,
+            },
             borderStyle: "dashed",
             textAlign: "center",
             backgroundColor: "#fcfcfc",
@@ -157,19 +206,36 @@ const DynamicFilter = ({
           <FilterAltIcon
             color="disabled"
             sx={{
-              fontSize: 60,
+              fontSize: {
+                xs: 45,
+                sm: 60,
+              },
               mb: 2,
             }}
           />
 
           <Typography
-            variant="h6"
+            sx={{
+              fontWeight: 600,
+              fontSize: {
+                xs: "1.2rem",
+                sm: "1.4rem",
+              },
+            }}
             gutterBottom
           >
             No Filters Added
           </Typography>
 
-          <Typography sx={{ color: "text.secondary" }}>
+          <Typography
+            sx={{
+              color: "text.secondary",
+              fontSize: {
+                xs: "0.95rem",
+                sm: "1rem",
+              },
+            }}
+          >
             Click the <strong>Add Filter</strong> button
             above to start filtering employees.
           </Typography>
@@ -181,7 +247,10 @@ const DynamicFilter = ({
               key={filter.id}
               variant="outlined"
               sx={{
-                p: 2,
+                p: {
+                  xs: 1.5,
+                  sm: 2,
+                },
                 borderRadius: 2,
                 transition: "0.2s",
                 "&:hover": {

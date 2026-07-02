@@ -1,7 +1,4 @@
-import {
-  FieldType,
-  type FilterFieldConfig,
-} from "../types/filter";
+import {FieldType, type FilterFieldConfig,} from "../types/filter";
 
 export const employeeFilterConfig: FilterFieldConfig[] = [
   {

@@ -1,10 +1,5 @@
 import type { Employee } from "../types/employee";
-import type {
-  FilterCondition,
-  NumberRangeValue,
-  DateRangeValue,
-} from "../types/filter";
-
+import type {FilterCondition, NumberRangeValue, DateRangeValue,} from "../types/filter";
 import { getNestedValue } from "../utils/getNestedValue";
 import { operators } from "../utils/operators";
 

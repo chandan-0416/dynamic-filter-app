@@ -1,6 +1,7 @@
 import {
   Chip,
   Paper,
+  Stack,
   Table,
   TableBody,
   TableCell,
@@ -8,7 +9,6 @@ import {
   TableHead,
   TableRow,
   Typography,
-  Stack,
 } from "@mui/material";
 
 import type { Employee } from "../../types/employee";
@@ -24,12 +24,20 @@ const EmployeeTable = ({
 }: EmployeeTableProps) => {
   if (employees.length === 0) {
     return (
-      <Paper sx={{ mt: 3, p: 4, textAlign: "center" }}>
-        <Typography variant="h6">
+      <Paper
+        elevation={3}
+        sx={{
+          mt: 3,
+          p: { xs: 3, md: 5 },
+          textAlign: "center",
+          borderRadius: 3,
+        }}
+      >
+        <Typography variant="h6" sx={{ fontWeight: 600 }}>
           No employees found
         </Typography>
 
-        <Typography color="text.secondary">
+        <Typography color="text.secondary" sx={{ mt: 1 }}>
           Try changing your filters.
         </Typography>
       </Paper>
@@ -37,57 +45,139 @@ const EmployeeTable = ({
   }
 
   return (
-    <Paper sx={{ mt: 3 }}>
+    <Paper
+      elevation={3}
+      sx={{
+        mt: 3,
+        borderRadius: 3,
+        overflow: "hidden",
+      }}
+    >
+      {/* Header */}
+
       <Stack
-        direction="row"
-        sx={{ p: 2, justifyContent: "space-between", alignItems: "center" }}
+        direction={{ xs: "column", sm: "row" }}
+        spacing={2}
+        sx={{
+          p: { xs: 2, md: 3 },
+          justifyContent: "space-between",
+          alignItems: {
+            xs: "flex-start",
+            sm: "center",
+          },
+        }}
       >
-        <Typography variant="h6">
+        <Typography
+          variant="h6"
+          sx={{
+            fontWeight: "bold",
+          }}
+        >
           Employee Directory
         </Typography>
 
         <Typography color="text.secondary">
-          Showing {employees.length} of {totalEmployees} employees
+          Showing <strong>{employees.length}</strong> of{" "}
+          <strong>{totalEmployees}</strong> employees
         </Typography>
       </Stack>
 
-      <TableContainer>
-        <Table>
+      {/* Responsive Table */}
 
+      <TableContainer
+        sx={{
+          overflowX: "auto",
+        }}
+      >
+        <Table
+          sx={{
+            minWidth: 1250,
+          }}
+        >
           <TableHead>
-            <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>Department</TableCell>
-              <TableCell>Role</TableCell>
-              <TableCell>Salary</TableCell>
-              <TableCell>Join Date</TableCell>
-              <TableCell>Active</TableCell>
-              <TableCell>Projects</TableCell>
-              <TableCell>Rating</TableCell>
-              <TableCell>Skills</TableCell>
+            <TableRow
+              sx={{
+                backgroundColor: "#f5f5f5",
+              }}
+            >
+              <TableCell sx={{ fontWeight: 700, whiteSpace: "nowrap" }}>
+                Name
+              </TableCell>
+
+              <TableCell sx={{ fontWeight: 700, whiteSpace: "nowrap" }}>
+                Email
+              </TableCell>
+
+              <TableCell sx={{ fontWeight: 700, whiteSpace: "nowrap" }}>
+                Department
+              </TableCell>
+
+              <TableCell sx={{ fontWeight: 700, whiteSpace: "nowrap" }}>
+                Role
+              </TableCell>
+
+              <TableCell sx={{ fontWeight: 700, whiteSpace: "nowrap" }}>
+                Salary
+              </TableCell>
+
+              <TableCell sx={{ fontWeight: 700, whiteSpace: "nowrap" }}>
+                Join Date
+              </TableCell>
+
+              <TableCell sx={{ fontWeight: 700, whiteSpace: "nowrap" }}>
+                Active
+              </TableCell>
+
+              <TableCell sx={{ fontWeight: 700, whiteSpace: "nowrap" }}>
+                Projects
+              </TableCell>
+
+              <TableCell sx={{ fontWeight: 700, whiteSpace: "nowrap" }}>
+                Rating
+              </TableCell>
+
+              <TableCell sx={{ fontWeight: 700, whiteSpace: "nowrap" }}>
+                Skills
+              </TableCell>
             </TableRow>
           </TableHead>
 
           <TableBody>
             {employees.map((employee) => (
-              <TableRow key={employee.id} hover>
+              <TableRow
+                key={employee.id}
+                hover
+                sx={{
+                  "&:hover": {
+                    backgroundColor: "#fafafa",
+                  },
+                }}
+              >
+                <TableCell sx={{ whiteSpace: "nowrap" }}>
+                  {employee.name}
+                </TableCell>
 
-                <TableCell>{employee.name}</TableCell>
+                <TableCell sx={{ whiteSpace: "nowrap" }}>
+                  {employee.email}
+                </TableCell>
 
-                <TableCell>{employee.email}</TableCell>
+                <TableCell sx={{ whiteSpace: "nowrap" }}>
+                  {employee.department}
+                </TableCell>
 
-                <TableCell>{employee.department}</TableCell>
+                <TableCell sx={{ whiteSpace: "nowrap" }}>
+                  {employee.role}
+                </TableCell>
 
-                <TableCell>{employee.role}</TableCell>
-
-                <TableCell>
+                <TableCell sx={{ whiteSpace: "nowrap" }}>
                   ₹{employee.salary.toLocaleString()}
                 </TableCell>
 
-                <TableCell>{employee.joinDate}</TableCell>
+                <TableCell sx={{ whiteSpace: "nowrap" }}>
+                  {employee.joinDate}
+                </TableCell>
 
-                <TableCell>
+                <TableCell sx={{ whiteSpace: "nowrap" }}>
                   <Chip
                     label={
                       employee.isActive
@@ -103,35 +193,42 @@ const EmployeeTable = ({
                   />
                 </TableCell>
 
-                <TableCell>
+                <TableCell sx={{ whiteSpace: "nowrap" }}>
                   {employee.projects}
                 </TableCell>
 
-                <TableCell>
+                <TableCell sx={{ whiteSpace: "nowrap" }}>
                   {employee.performanceRating}
                 </TableCell>
 
                 <TableCell>
                   <Stack
                     direction="row"
-                    spacing={1}
-                    sx={{ flexWrap: "wrap" }}
+                    spacing={0.5}
+                    useFlexGap
+                    sx={{
+                      flexWrap: "wrap",
+                      minWidth: 180,
+                    }}
                   >
                     {employee.skills.map((skill) => (
                       <Chip
                         key={skill}
                         label={skill}
                         size="small"
-                        sx={{ mb: 0.5 }}
+                        color="primary"
+                        variant="outlined"
+                        sx={{
+                          borderRadius: 2,
+                          mb: 0.5,
+                        }}
                       />
                     ))}
                   </Stack>
                 </TableCell>
-
               </TableRow>
             ))}
           </TableBody>
-
         </Table>
       </TableContainer>
     </Paper>

@@ -1,10 +1,3 @@
-/**
- * Returns the value of a nested property using a dot-separated path.
- *
- * Example:
- * getNestedValue(employee, "address.city")
- * => "San Francisco"
- */
 export function getNestedValue(
   object: Record<string, unknown>,
   path: string

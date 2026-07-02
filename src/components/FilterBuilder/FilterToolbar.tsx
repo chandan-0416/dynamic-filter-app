@@ -1,13 +1,8 @@
 import { Button, Paper, Stack, Typography } from "@mui/material";
-// import AddIcon from "@mui/icons-material/Add";
-
 import FilterRow from "./FilterRow";
 import { v4 as uuid } from "uuid";
+import type {FilterCondition,FilterFieldConfig,} from "../../types/filter";
 
-import type {
-  FilterCondition,
-  FilterFieldConfig,
-} from "../../types/filter";
 
 interface DynamicFilterProps {
   fields: FilterFieldConfig[];
@@ -20,6 +15,7 @@ const DynamicFilter = ({
   filters,
   onFiltersChange,
 }: DynamicFilterProps) => {
+  
   // Add new filter row
   const handleAddFilter = () => {
     if (fields.length === 0) return;

@@ -1,5 +1,4 @@
 import { useMemo } from "react";
-
 import type { Employee } from "../types/employee";
 import type { FilterCondition } from "../types/filter";
 import { filterEmployees } from "../services/filterEngine";

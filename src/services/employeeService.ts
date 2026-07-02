@@ -1,5 +1,3 @@
-// src/services/employeeService.ts
-
 import type { Employee } from "../types/employee";
 
 const API_URL = "/mock/employees.json";

@@ -1,14 +1,8 @@
-import { IconButton, MenuItem, Stack, TextField } from "@mui/material";
+import {Box, IconButton, MenuItem, Stack, TextField,} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-
 import InputRenderer from "./InputRenderer";
-
 import { FieldType } from "../../types/filter";
-import type {
-  FilterCondition,
-  FilterFieldConfig,
-  FilterOperator,
-} from "../../types/filter";
+import type {FilterCondition, FilterFieldConfig, FilterOperator,} from "../../types/filter";
 
 interface FilterRowProps {
   condition: FilterCondition;
@@ -23,6 +17,7 @@ const FilterRow = ({
   onChange,
   onDelete,
 }: FilterRowProps) => {
+  
   // Selected field configuration
   const selectedField = fields.find(
     (field) => field.key === condition.field
@@ -33,7 +28,9 @@ const FilterRow = ({
   ) => {
     const fieldKey = event.target.value;
 
-    const config = fields.find((field) => field.key === fieldKey);
+    const config = fields.find(
+      (field) => field.key === fieldKey
+    );
 
     if (!config) return;
 
@@ -45,35 +42,47 @@ const FilterRow = ({
     });
   };
 
-const handleOperatorChange = (
-  event: React.ChangeEvent<HTMLInputElement>
-) => {
-  const operator = event.target.value as FilterOperator;
+  const handleOperatorChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const operator =
+      event.target.value as FilterOperator;
 
-  let value: FilterCondition["value"] = "";
+    let value: FilterCondition["value"] = "";
 
-  if (
-    selectedField?.type === FieldType.NUMBER &&
-    operator === "between"
-  ) {
-    value = { min: "", max: "" };
-  } else if (
-    selectedField?.type === FieldType.DATE &&
-    operator === "between"
-  ) {
-    value = { from: "", to: "" };
-  } else if (selectedField?.type === FieldType.MULTI_SELECT) {
-    value = [];
-  }
+    if (
+      selectedField?.type === FieldType.NUMBER &&
+      operator === "between"
+    ) {
+      value = {
+        min: "",
+        max: "",
+      };
+    } else if (
+      selectedField?.type === FieldType.DATE &&
+      operator === "between"
+    ) {
+      value = {
+        from: "",
+        to: "",
+      };
+    } else if (
+      selectedField?.type ===
+      FieldType.MULTI_SELECT
+    ) {
+      value = [];
+    }
 
-  onChange({
-    ...condition,
-    operator,
-    value,
-  });
-};
+    onChange({
+      ...condition,
+      operator,
+      value,
+    });
+  };
 
-  const handleValueChange = (value: unknown) => {
+  const handleValueChange = (
+    value: unknown
+  ) => {
     onChange({
       ...condition,
       value: value as FilterCondition["value"],
@@ -82,9 +91,18 @@ const handleOperatorChange = (
 
   return (
     <Stack
-      direction="row"
+      direction={{
+        xs: "column",
+        md: "row",
+      }}
       spacing={2}
-      sx={{ mb: 2, alignItems: "center" }}
+      sx={{
+        width: "100%",
+        alignItems: {
+          xs: "stretch",
+          md: "center",
+        },
+      }}
     >
       {/* Field */}
       <TextField
@@ -92,10 +110,19 @@ const handleOperatorChange = (
         label="Field"
         value={condition.field}
         onChange={handleFieldChange}
-        sx={{ minWidth: 180 }}
+        fullWidth
+        sx={{
+          flex: 1,
+          minWidth: {
+            md: 180,
+          },
+        }}
       >
         {fields.map((field) => (
-          <MenuItem key={field.key} value={field.key}>
+          <MenuItem
+            key={field.key}
+            value={field.key}
+          >
             {field.label}
           </MenuItem>
         ))}
@@ -107,27 +134,67 @@ const handleOperatorChange = (
         label="Operator"
         value={condition.operator}
         onChange={handleOperatorChange}
-        sx={{ minWidth: 180 }}
+        fullWidth
+        sx={{
+          flex: 1,
+          minWidth: {
+            md: 180,
+          },
+        }}
       >
-        {selectedField?.operators.map((operator) => (
-          <MenuItem key={operator} value={operator}>
-            {operator}
-          </MenuItem>
-        ))}
+        {selectedField?.operators.map(
+          (operator) => (
+            <MenuItem
+              key={operator}
+              value={operator}
+            >
+              {operator}
+            </MenuItem>
+          )
+        )}
       </TextField>
 
       {/* Value */}
-<InputRenderer
-  field={selectedField}
-  operator={condition.operator}
-  value={condition.value}
-  onChange={handleValueChange}
-/>
+      <Box
+        sx={{
+          flex: 2,
+          width: "100%",
+        }}
+      >
+        <InputRenderer
+          field={selectedField}
+          operator={condition.operator}
+          value={condition.value}
+          onChange={handleValueChange}
+        />
+      </Box>
 
       {/* Delete */}
-      <IconButton color="error" onClick={onDelete}>
-        <DeleteIcon />
-      </IconButton>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: {
+            xs: "flex-end",
+            md: "center",
+          },
+          alignItems: "center",
+        }}
+      >
+        <IconButton
+          color="error"
+          onClick={onDelete}
+          sx={{
+            border: "1px solid",
+            borderColor: "error.light",
+            bgcolor: "error.50",
+            "&:hover": {
+              bgcolor: "error.100",
+            },
+          }}
+        >
+          <DeleteIcon />
+        </IconButton>
+      </Box>
     </Stack>
   );
 };

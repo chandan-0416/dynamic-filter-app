@@ -1,24 +1,10 @@
 import { useState } from "react";
-import {
-  Alert,
-  Box,
-  Card,
-  CardContent,
-  CircularProgress,
-  Container,
-  Grid,
-  Paper,
-  Typography,
-} from "@mui/material";
-
+import {Alert, Box, Card, CardContent, CircularProgress, Container, Grid, Paper, Typography,} from "@mui/material";
 import DynamicFilter from "../components/FilterBuilder/DynamicFilter";
 import EmployeeTable from "../components/Table/EmployeeTable";
-
 import { useEmployees } from "../hooks/useEmployees";
 import { useFilteredData } from "../hooks/useFilteredData";
-
 import { employeeFilterConfig } from "../config/employeeFilterConfig";
-
 import type { FilterCondition } from "../types/filter";
 
 const EmployeePage = () => {
@@ -59,17 +45,33 @@ const EmployeePage = () => {
       sx={{
         minHeight: "100vh",
         backgroundColor: "#f4f6f8",
-        py: 5,
+        py: {
+          xs: 2,
+          sm: 3,
+          md: 5,
+        },
       }}
     >
-      <Container maxWidth="xl">
-
-        {/* ================= HEADER ================= */}
+      <Container
+        maxWidth="xl"
+        sx={{
+          px: {
+            xs: 2,
+            sm: 3,
+            md: 4,
+          },
+        }}
+      >
+        {/*HEADER */}
 
         <Paper
           elevation={4}
           sx={{
-            p: 4,
+            p: {
+              xs: 3,
+              sm: 4,
+              md: 5,
+            },
             mb: 4,
             borderRadius: 3,
             background:
@@ -78,27 +80,42 @@ const EmployeePage = () => {
           }}
         >
           <Typography
-            variant="h3"
+            sx={{
+              fontWeight: "bold",
+              fontSize: {
+                xs: "2rem",
+                sm: "2.4rem",
+                md: "3rem",
+              },
+            }}
             gutterBottom
-            sx={{ fontWeight: "bold" }}
           >
-            Dynamic Filter Component System
+            Employee Management Dashboard
           </Typography>
 
-          <Typography variant="h6">
-            Dynamic, reusable and configuration-driven
-            employee filtering system.
+          <Typography
+            sx={{
+              fontSize: {
+                xs: "1rem",
+                sm: "1.1rem",
+                md: "1.25rem",
+              },
+            }}
+          >
+            Dynamic, reusable and configuration-driven employee
+            filtering system.
           </Typography>
         </Paper>
 
-        {/* ================= STATISTICS ================= */}
-
         <Grid
           container
-          spacing={3}
+          spacing={{
+            xs: 2,
+            sm: 3,
+          }}
           sx={{ mb: 4 }}
         >
-          <Grid size={{ xs: 12, md: 4 }}>
+          <Grid size={{ xs: 12, sm: 6, md: 4 }}>
             <Card elevation={3}>
               <CardContent>
                 <Typography
@@ -109,8 +126,13 @@ const EmployeePage = () => {
                 </Typography>
 
                 <Typography
-                  variant="h4"
-                  sx={{ fontWeight: "bold" }}
+                  sx={{
+                    fontWeight: "bold",
+                    fontSize: {
+                      xs: "2rem",
+                      md: "2.4rem",
+                    },
+                  }}
                 >
                   {employees.length}
                 </Typography>
@@ -118,7 +140,7 @@ const EmployeePage = () => {
             </Card>
           </Grid>
 
-          <Grid size={{ xs: 12, md: 4 }}>
+          <Grid size={{ xs: 12, sm: 6, md: 4 }}>
             <Card elevation={3}>
               <CardContent>
                 <Typography
@@ -129,9 +151,14 @@ const EmployeePage = () => {
                 </Typography>
 
                 <Typography
-                  variant="h4"
                   color="primary"
-                  sx={{ fontWeight: "bold" }}
+                  sx={{
+                    fontWeight: "bold",
+                    fontSize: {
+                      xs: "2rem",
+                      md: "2.4rem",
+                    },
+                  }}
                 >
                   {filteredEmployees.length}
                 </Typography>
@@ -139,7 +166,7 @@ const EmployeePage = () => {
             </Card>
           </Grid>
 
-          <Grid size={{ xs: 12, md: 4 }}>
+          <Grid size={{ xs: 12, sm: 12, md: 4 }}>
             <Card elevation={3}>
               <CardContent>
                 <Typography
@@ -150,9 +177,14 @@ const EmployeePage = () => {
                 </Typography>
 
                 <Typography
-                  variant="h4"
                   color="success.main"
-                  sx={{ fontWeight: "bold" }}
+                  sx={{
+                    fontWeight: "bold",
+                    fontSize: {
+                      xs: "2rem",
+                      md: "2.4rem",
+                    },
+                  }}
                 >
                   {filters.length}
                 </Typography>
@@ -161,12 +193,15 @@ const EmployeePage = () => {
           </Grid>
         </Grid>
 
-        {/* ================= FILTER ================= */}
+        {/*FILTER */}
 
         <Paper
           elevation={3}
           sx={{
-            p: 3,
+            p: {
+              xs: 2,
+              sm: 3,
+            },
             mb: 4,
             borderRadius: 3,
           }}
@@ -178,38 +213,59 @@ const EmployeePage = () => {
           />
         </Paper>
 
-        {/* ================= TABLE ================= */}
+        {/*TABLE */}
 
         <Paper
           elevation={3}
           sx={{
-            p: 3,
+            p: {
+              xs: 2,
+              sm: 3,
+            },
             borderRadius: 3,
           }}
         >
           <Typography
-            variant="h5"
+            sx={{
+              fontWeight: "bold",
+              fontSize: {
+                xs: "1.4rem",
+                sm: "1.7rem",
+                md: "2rem",
+              },
+            }}
             gutterBottom
-            sx={{ fontWeight: "bold" }}
           >
             Employees
           </Typography>
 
           <Typography
             color="text.secondary"
-            sx={{ mb: 3 }}
+            sx={{
+              mb: 3,
+              fontSize: {
+                xs: "0.95rem",
+                sm: "1rem",
+              },
+            }}
           >
             Showing{" "}
             <strong>{filteredEmployees.length}</strong> of{" "}
             <strong>{employees.length}</strong> employees
           </Typography>
 
-          <EmployeeTable
-            employees={filteredEmployees}
-            totalEmployees={filteredEmployees.length}
-          />
+          <Box
+            sx={{
+              width: "100%",
+              overflowX: "auto",
+            }}
+          >
+            <EmployeeTable
+              employees={filteredEmployees}
+              totalEmployees={filteredEmployees.length}
+            />
+          </Box>
         </Paper>
-
       </Container>
     </Box>
   );
